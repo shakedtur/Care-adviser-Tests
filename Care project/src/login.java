@@ -87,6 +87,7 @@ public class login extends JFrame {
                     }
                     if(puname.equals(usertxt) && ppaswd.equals(passtxt)) {
                         MainMenu menu =new MainMenu();
+                        patientData qframe=new patientData();
                         dispose();
                     }
 
