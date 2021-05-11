@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class YesNo extends JFrame {
@@ -17,12 +19,15 @@ public class YesNo extends JFrame {
     private JRadioButton femaleRadio;
     private JRadioButton[] arradio={smokRadio,eastPersonRadio,femaleRadio};
 
+    private JButton okButton;
     public YesNo(){
         setTitle("Yes no questions to patient");
         initpanel=new JPanel();
         answerpanel=new JPanel();
         initpanel.setLayout(new BorderLayout());
 
+        okButton=new JButton("Ok");
+        initpanel.add(okButton,BorderLayout.SOUTH);
         questionspanel=new JPanel();
         questionspanel.setLayout(new BoxLayout(questionspanel,BoxLayout.Y_AXIS));
         answerpanel.setLayout(new BoxLayout(answerpanel,BoxLayout.Y_AXIS));
@@ -52,4 +57,19 @@ public class YesNo extends JFrame {
         setVisible(true);
 
     }
+
+    private class OkListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            smoking=smokRadio.getAutoscrolls();//??need to check
+            eastPerson=eastPersonRadio.getAutoscrolls();
+            female=femaleRadio.getAutoscrolls();
+
+        }
+
+
+    }
+
+
 }
