@@ -12,7 +12,7 @@ public class login extends JFrame {
     JButton newUSer;
     JLabel username;
     JLabel password;
-
+    boolean loginsuccess=false;
 
     public login(){
         super("Login Autentification");
@@ -86,8 +86,9 @@ public class login extends JFrame {
 
                     }
                     if(puname.equals(usertxt) && ppaswd.equals(passtxt)) {
-                        MainMenu menu =new MainMenu();
-                        patientData qframe=new patientData();
+//                        MainMenu menu =new MainMenu();
+//                        patientData qframe=new patientData();
+                        loginsuccess=true;
                         dispose();
                     }
 

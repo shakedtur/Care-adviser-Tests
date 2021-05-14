@@ -8,8 +8,11 @@ public class YesNo extends JFrame {
     private boolean smoking;
     private boolean eastPerson;
     private boolean female;
+    private boolean lung;
+    private boolean ethiopian;
+    private boolean pregnancy;
     private int age;
-    private String[] textarr={"Are you smoking?","Are you easy preson?","Are you female?"};
+    private String[] textarr={"Are you smoking?","Are you easy preson?","Are you female?","do you have lung ill in past","Ethiopian?","pregnancy now?"};
     private JPanel initpanel;
     private JPanel questionspanel;
     private JPanel answerpanel;
@@ -17,7 +20,12 @@ public class YesNo extends JFrame {
     private JRadioButton smokRadio;
     private JRadioButton eastPersonRadio;
     private JRadioButton femaleRadio;
-    private JRadioButton[] arradio={smokRadio,eastPersonRadio,femaleRadio};
+    private JRadioButton lungRadio;
+    private JRadioButton Ethiopianradio;
+    private JRadioButton pregnancyradio;
+
+
+    private JRadioButton[] arradio={smokRadio,eastPersonRadio,femaleRadio,lungRadio,Ethiopianradio,pregnancyradio};
 
     private JButton okButton;
     public YesNo(){
@@ -27,12 +35,14 @@ public class YesNo extends JFrame {
         initpanel.setLayout(new BorderLayout());
 
         okButton=new JButton("Ok");
+        okButton.addActionListener(new OkListener());
         initpanel.add(okButton,BorderLayout.SOUTH);
         questionspanel=new JPanel();
         questionspanel.setLayout(new BoxLayout(questionspanel,BoxLayout.Y_AXIS));
         answerpanel.setLayout(new BoxLayout(answerpanel,BoxLayout.Y_AXIS));
         for(int i=0;i<textarr.length;i++){
-            JLabel qtext=new JLabel(textarr[i]);
+            JLabel qtext=new JLabel((i+1)+"."+textarr[i]);
+            qtext.setSize(new Dimension());
             questionspanel.add(qtext);
         }
         for (int i=0;i< arradio.length;i++){
@@ -62,14 +72,63 @@ public class YesNo extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            smoking=smokRadio.getAutoscrolls();//??need to check
-            eastPerson=eastPersonRadio.getAutoscrolls();
-            female=femaleRadio.getAutoscrolls();
-
+          setSmoking(arradio[0].isSelected());//??need to check
+            eastPerson=arradio[1].isSelected();
+            female=arradio[2].isSelected();
+            lung=arradio[3].isSelected();
+            ethiopian=arradio[4].isSelected();
+            pregnancy=arradio[5].isSelected();
+            setVisible(false);
         }
 
 
     }
 
+    public boolean isSmoking() {
+        return smoking;
+    }
 
+    public void setSmoking(boolean smoking) {
+        this.smoking = smoking;
+    }
+
+    public boolean isEastPerson() {
+        return eastPerson;
+    }
+
+    public void setEastPerson(boolean eastPerson) {
+        this.eastPerson = eastPerson;
+    }
+
+    public boolean isFemale() {
+        return female;
+    }
+
+    public void setFemale(boolean female) {
+        this.female = female;
+    }
+
+    public boolean isLung() {
+        return lung;
+    }
+
+    public void setLung(boolean lung) {
+        this.lung = lung;
+    }
+
+    public boolean isEthiopian() {
+        return ethiopian;
+    }
+
+    public void setEthiopian(boolean ethiopian) {
+        this.ethiopian = ethiopian;
+    }
+
+    public boolean isPregnancy() {
+        return pregnancy;
+    }
+
+    public void setPregnancy(boolean pregnancy) {
+        this.pregnancy = pregnancy;
+    }
 }

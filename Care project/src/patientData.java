@@ -9,6 +9,7 @@ public class patientData extends JFrame {
     private final int VALUES=7;
     private int WBC,Neut,Lymph,RBC,HCT,Urea,HB,Keratin,Iron,HDL,Alkaline;//importent to update the number of VALUEs
     public int[] HealthResults={WBC,Neut,Lymph,RBC,HCT,Urea,HB,Keratin,Iron,HDL,Alkaline};
+    public YesNo Yesnoanswer;
     //panels
     private JPanel[] JPanelist;
     private JPanel insidePanel;
@@ -61,6 +62,14 @@ public class patientData extends JFrame {
 
     }
 
+
+    public YesNo getYesnoanswer() {
+        return Yesnoanswer;
+    }
+
+    public void setYesnoanswer(YesNo yesnoanswer) {
+        Yesnoanswer = yesnoanswer;
+    }
 
     public patientData(){
         setTitle("health qeustions ");
@@ -140,6 +149,7 @@ public class patientData extends JFrame {
                 for(int i:HealthResults){
                     System.out.println(i);
                 }
+                setVisible(false);
 
             }
             catch (NumberFormatException exception){
