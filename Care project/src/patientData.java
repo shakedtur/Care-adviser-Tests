@@ -8,6 +8,7 @@ public class patientData extends JFrame {
     private int age;
     private final int VALUES=7;
     private int WBC,Neut,Lymph,RBC,HCT,Urea,HB,Keratin,Iron,HDL,Alkaline;//importent to update the number of VALUEs
+    public String[] paramtername={"WBC","Neut","Lymph","RBC","HCT","Urea","HB","Keratin","Iron","HDL","Alkaline"};
     public int[] HealthResults={WBC,Neut,Lymph,RBC,HCT,Urea,HB,Keratin,Iron,HDL,Alkaline};
     public YesNo Yesnoanswer;
     //panels
@@ -28,7 +29,7 @@ public class patientData extends JFrame {
     private JLabel RBCLable;
 
     private JTextField[] Jtextlist;
-    private String[] Jtextstring={"54","20","14","3","100","30","61"};
+    private String[] Jtextstring={"56","20","14","3","100","30","61"};
     private JTextField textage;
     private JTextField WBCtext;
     private JTextField Neuttext;
@@ -96,6 +97,7 @@ public class patientData extends JFrame {
         insidePanel.add(LymphPanel);
         insidePanel.add(RBCPanel);
 
+        //creating text fields
 
         for(int i=0;i<VALUES;i++){
             JPanelist[i]=new JPanel();
@@ -144,7 +146,8 @@ public class patientData extends JFrame {
                 HDL=Integer.parseInt(Jtextlist[5].getText());
                 Alkaline=Integer.parseInt(Jtextlist[6].getText());
                 SetHealthVal();
-                JOptionPane.showMessageDialog(patientData.this, "Success", ":)", JOptionPane.NO_OPTION);
+                //TODO remove notes from here!!!
+                //JOptionPane.showMessageDialog(patientData.this, "Success", ":)", JOptionPane.NO_OPTION);
                 System.out.println("ok button worked");
                 for(int i:HealthResults){
                     System.out.println(i);
@@ -217,6 +220,11 @@ public class patientData extends JFrame {
     public int[] getHealthResults() {
         return HealthResults;
     }
+
+    public String[] getParamtername() {
+        return paramtername;
+    }
+
     public int getHealthResultsVal(int index) {
         return HealthResults[index];
     }

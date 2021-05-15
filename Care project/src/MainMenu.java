@@ -41,7 +41,10 @@ public class MainMenu extends JFrame implements ActionListener {
         else if(e.getSource()==btmButtons[3]){//diagnosis
             if(firstpatient!=null) {
                 Analysis ana = new Analysis(firstpatient);
-                ana.diagnosis();
+                //ana.diagnosis();
+                add(ana.getScrollPane(),BorderLayout.CENTER);
+                repaint();
+                revalidate();
             }
         }
 
