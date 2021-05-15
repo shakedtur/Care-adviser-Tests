@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class patientData extends JFrame {
     //values
     private int age;
-    private final int VALUES=7;
+    private final int VALUES=11;
     private int WBC,Neut,Lymph,RBC,HCT,Urea,HB,Keratin,Iron,HDL,Alkaline;//importent to update the number of VALUEs
     public String[] paramtername={"WBC","Neut","Lymph","RBC","HCT","Urea","HB","Keratin","Iron","HDL","Alkaline"};
     public int[] HealthResults={WBC,Neut,Lymph,RBC,HCT,Urea,HB,Keratin,Iron,HDL,Alkaline};
@@ -21,7 +21,7 @@ public class patientData extends JFrame {
     private  JPanel RBCPanel;
 
     private JLabel[] JLabelist;
-    private String [] jLableString={"HCT 37-54% ","Urea 17-43","HB 12-16","Keratin 3-17","Iron 60-160","HDL 29-62","Alkaline 60"};
+    private String [] jLableString={"WBC","Neut %","Lymph %","RBC","HCT 37-54% ","Urea 17-43","HB 12-16","Keratin 3-17","Iron 60-160","HDL 29-62","Alkaline 60"};
     private JLabel ageLable;
     private JLabel WBCLable;
     private  JLabel NeutLable;
@@ -29,7 +29,7 @@ public class patientData extends JFrame {
     private JLabel RBCLable;
 
     private JTextField[] Jtextlist;
-    private String[] Jtextstring={"56","20","14","3","100","30","61"};
+    private String[] Jtextstring={"5000","33","40","5","32","20","14","3","100","30","61"};
     private JTextField textage;
     private JTextField WBCtext;
     private JTextField Neuttext;
@@ -41,25 +41,25 @@ public class patientData extends JFrame {
     public JSlider bloodSlider;
 
     private void SetHealthVal(){
-//        HealthResults[0]=WBC;
-//        HealthResults[1]=Neut;
-//        HealthResults[2]=Lymph;
-//        HealthResults[3]=RBC;
-//        HealthResults[4]=HCT;
-//        HealthResults[5]=Urea;
-//        HealthResults[6]=HB;
-//        HealthResults[7]=Keratin;
-//        HealthResults[8]=Iron;
-//        HealthResults[9]=HDL;
-//        HealthResults[10]=Alkaline;
+        HealthResults[0]=WBC;
+        HealthResults[1]=Neut;
+        HealthResults[2]=Lymph;
+        HealthResults[3]=RBC;
+        HealthResults[4]=HCT;
+        HealthResults[5]=Urea;
+        HealthResults[6]=HB;
+        HealthResults[7]=Keratin;
+        HealthResults[8]=Iron;
+        HealthResults[9]=HDL;
+        HealthResults[10]=Alkaline;
 
-        HealthResults[0]=HCT;
-        HealthResults[1]=Urea;
-        HealthResults[2]=HB;
-        HealthResults[3]=Keratin;
-        HealthResults[4]=Iron;
-        HealthResults[5]=HDL;
-        HealthResults[6]=Alkaline;
+//        HealthResults[0]=HCT;
+//        HealthResults[1]=Urea;
+//        HealthResults[2]=HB;
+//        HealthResults[3]=Keratin;
+//        HealthResults[4]=Iron;
+//        HealthResults[5]=HDL;
+//        HealthResults[6]=Alkaline;
 
     }
 
@@ -80,10 +80,10 @@ public class patientData extends JFrame {
         insidePanel.setLayout(new BoxLayout(insidePanel,BoxLayout.Y_AXIS));
         //insidePanel.setLayout(new FlowLayout());
         agePanel=CreateAgeP();
-        WBCPanel=CreateWBCP();
-        CreateNeut();
-        LymphPanel=CreateLymph();
-        CreateRBC();
+        //WBCPanel=CreateWBCP();
+        //CreateNeut();
+       // LymphPanel=CreateLymph();
+        //CreateRBC();
 
         JPanelist=new JPanel[VALUES];
         Jtextlist=new JTextField[VALUES];
@@ -92,10 +92,10 @@ public class patientData extends JFrame {
 
 
         insidePanel.add(agePanel);
-        insidePanel.add(WBCPanel);
-        insidePanel.add(NeutPanel);
-        insidePanel.add(LymphPanel);
-        insidePanel.add(RBCPanel);
+//        insidePanel.add(WBCPanel);
+//        insidePanel.add(NeutPanel);
+//        insidePanel.add(LymphPanel);
+//        insidePanel.add(RBCPanel);
 
         //creating text fields
 
@@ -133,22 +133,26 @@ public class patientData extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
+                int a=Integer.parseInt(textage.getText());
+                if(a<0||a>120) {
+                    throw new Exception("wrong age");
+                }
                 age = Integer.parseInt(textage.getText());
-                setWBC(Integer.parseInt(WBCtext.getText()));
-                Neut=Integer.parseInt(Neuttext.getText());
-                Lymph=Integer.parseInt(Lymphtext.getText());
-                RBC=Integer.parseInt(RBCtext.getText());
-                HCT=Integer.parseInt(Jtextlist[0].getText());
-                Urea=Integer.parseInt(Jtextlist[1].getText());
-                HB=Integer.parseInt(Jtextlist[2].getText());
-                Keratin=Integer.parseInt(Jtextlist[3].getText());
-                Iron=Integer.parseInt(Jtextlist[4].getText());
-                HDL=Integer.parseInt(Jtextlist[5].getText());
-                Alkaline=Integer.parseInt(Jtextlist[6].getText());
+                WBC=(Integer.parseInt(Jtextlist[0].getText()));
+                Neut=Integer.parseInt(Jtextlist[1].getText());
+                Lymph=Integer.parseInt(Jtextlist[2].getText());
+                RBC=Integer.parseInt(Jtextlist[3].getText());
+                HCT=Integer.parseInt(Jtextlist[4].getText());
+                Urea=Integer.parseInt(Jtextlist[5].getText());
+                HB=Integer.parseInt(Jtextlist[6].getText());
+                Keratin=Integer.parseInt(Jtextlist[7].getText());
+                Iron=Integer.parseInt(Jtextlist[8].getText());
+                HDL=Integer.parseInt(Jtextlist[9].getText());
+                Alkaline=Integer.parseInt(Jtextlist[10].getText());
                 SetHealthVal();
                 //TODO remove notes from here!!!
                 //JOptionPane.showMessageDialog(patientData.this, "Success", ":)", JOptionPane.NO_OPTION);
-                System.out.println("ok button worked");
+                //System.out.println("ok button worked");
                 for(int i:HealthResults){
                     System.out.println(i);
                 }
@@ -158,7 +162,16 @@ public class patientData extends JFrame {
             catch (NumberFormatException exception){
                 JOptionPane.showMessageDialog(patientData.this, "Wrong input, try again", "Wrong Input",JOptionPane.WARNING_MESSAGE);
             }
+            catch (Exception es){
+                JOptionPane.showMessageDialog(patientData.this, "Wrong age, try again", "Wrong Input",JOptionPane.WARNING_MESSAGE);
+            }
         }
+    }
+
+    public void correctage(int a)throws Exception{
+        if(a<0||a>120)
+            throw new Exception("wrong age");
+        age=a;
     }
 
     private JPanel CreateAgeP(){

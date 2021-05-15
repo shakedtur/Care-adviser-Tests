@@ -1,5 +1,5 @@
 public enum Scale {
-    LOW,NORMAL,HIGH;
+    LOW,NORMAL,HIGH,NOTMATCH;
 
     public String stam(){
         if(this==LOW){
