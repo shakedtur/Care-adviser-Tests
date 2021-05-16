@@ -53,14 +53,6 @@ public class patientData extends JFrame {
         HealthResults[9]=HDL;
         HealthResults[10]=Alkaline;
 
-//        HealthResults[0]=HCT;
-//        HealthResults[1]=Urea;
-//        HealthResults[2]=HB;
-//        HealthResults[3]=Keratin;
-//        HealthResults[4]=Iron;
-//        HealthResults[5]=HDL;
-//        HealthResults[6]=Alkaline;
-
     }
 
 
@@ -78,12 +70,8 @@ public class patientData extends JFrame {
         insidePanel=new JPanel();
 
         insidePanel.setLayout(new BoxLayout(insidePanel,BoxLayout.Y_AXIS));
-        //insidePanel.setLayout(new FlowLayout());
         agePanel=CreateAgeP();
-        //WBCPanel=CreateWBCP();
-        //CreateNeut();
-       // LymphPanel=CreateLymph();
-        //CreateRBC();
+
 
         JPanelist=new JPanel[VALUES];
         Jtextlist=new JTextField[VALUES];
@@ -92,12 +80,7 @@ public class patientData extends JFrame {
 
 
         insidePanel.add(agePanel);
-//        insidePanel.add(WBCPanel);
-//        insidePanel.add(NeutPanel);
-//        insidePanel.add(LymphPanel);
-//        insidePanel.add(RBCPanel);
 
-        //creating text fields
 
         for(int i=0;i<VALUES;i++){
             JPanelist[i]=new JPanel();

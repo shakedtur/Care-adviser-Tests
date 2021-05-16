@@ -16,7 +16,7 @@ public class Analysis {
     private String Summary;
     private static final String[] sick={"בריא","אנמיה","דיאטה","דימום","היפרליפידמיה ","הפרעה ביצירת הדם / תאי דם ","הפרעה המטולוגית ","הרעלת ברזל ","התייבשות",
     "זיהום","חוסר בויטמנים","מחלה ויראלית","מחלות בדרכי המרה ","מחלות לב ","מחלת דם ","מחלת כבד ","מחלת כליה ","מחסור בברזל","מחלות שריר ","מעשנים",
-    "מחלת ריאות ","פעילות יתר של בלוטת התריס ","סוכרת מבוגרים ","סרטן ","צריכה מוגברת של בשר ","שימוש בתרופות שונות "};
+    "מחלת ריאות ","פעילות יתר של בלוטת התריס ","סוכרת מבוגרים ","סרטן ","צריכה מוגברת של בשר ","שימוש בתרופות שונות ","תת תזונה"};
     private static final String[] advice={" ",
     "שני כדורי 10 מ\"ג של B12 ביום למשך חודש  ",
     "לתאם פגישה עם תזונאי ",
@@ -43,7 +43,8 @@ public class Analysis {
     "התאמת אינסולין למטופל ",
     "Entrectinib - אנטרקטיניב",
     "לתאם פגישה עם תזונאי ",
-    "הפנייה לרופא המשפחה לצורך בדיקת התאמה בין התרופות "};
+    "הפנייה לרופא המשפחה לצורך בדיקת התאמה בין התרופות ",
+    "לתאם פגישה עם תזונאי"};
     //
     public Analysis(patientData pd){
         pdResults=pd;
@@ -87,12 +88,21 @@ public class Analysis {
 
         return data;
     }
+//    private void stam(){
+//        diagnosis();
+//        SickAnalysis(0);
+//        Adviser(0);
+//    }
 
     public void diagnosis(){
         //0
         arrScale[0]=WBCScale0(pdResults.getWBC());
+        arrScale[1]=Neut1(pdResults.getNeut());
+        arrScale[2]=Lymph2(pdResults.getLymph());
+        arrScale[3]=RBCscale3(pdResults.getRBC());
         //4
         arrScale[4]=HTCscale4(pdResults.getHCT());
+        arrScale[5]=UreaScale5(pdResults.getUrea());
 
         for (int i=0;i<arrScale.length;i++){
             if(arrScale[i]!=Scale.NORMAL){
@@ -110,10 +120,41 @@ public class Analysis {
                 else if(arrScale[0]==Scale.LOW)
                     return spaceadder(new String[]{sick[11],"כשל במערכת החיסון",sick[23]});
                 break;
+            case 1:
+                if (arrScale[1]==Scale.HIGH)
+                    return sick[9];
+                else
+                    return spaceadder(new String[]{sick[5],sick[9],sick[23]});
+            case 2:
+                if (arrScale[2]==Scale.HIGH)
+                    return sick[5];
+                else
+                    return spaceadder(new String[]{sick[9],sick[23]});
+            case 3:
+                if (arrScale[3]==Scale.HIGH){
+                    if(pdResults.Yesnoanswer.isSmoking())
+                        return spaceadder(new String[]{sick[5],sick[19],sick[20]});
+                    else
+                        return sick[5];
+                }
+                else
+                    return spaceadder(new String[]{sick[1],sick[3]});
             case 4:
-                if(arrScale[4]==Scale.LOW)
+                if (arrScale[2]==Scale.HIGH)
+                    return sick[19];
+                else if(arrScale[4]==Scale.LOW)
                     return spaceadder(new String[]{sick[1],sick[3]});
                 break;
+            case 5:
+                if (arrScale[5]==Scale.HIGH)
+                    return spaceadder(new String[]{sick[2],sick[8],sick[16]});
+                else{
+                    if(pdResults.getYesnoanswer().isPregnancy())
+                        return "בהריון כנראה";
+                    return spaceadder(new String[]{sick[26],sick[2],sick[15]});
+                }
+
+
         }
         return "";
     }
@@ -125,7 +166,25 @@ public class Analysis {
                 else if(arrScale[0]==Scale.LOW)
                     return spaceadder(new String[]{advice[11],advice[23]});
                 break;
-
+            case 1:
+                if (arrScale[1]==Scale.HIGH)
+                    return advice[9];
+                else
+                    return spaceadder(new String[]{advice[5],advice[9],advice[23]});
+            case 2:
+                if (arrScale[2]==Scale.HIGH)
+                    return advice[5];
+                else
+                    return spaceadder(new String[]{advice[9],advice[23]+"לימפומה"});
+            case 3:
+                if (arrScale[3]==Scale.HIGH){
+                    if(pdResults.Yesnoanswer.isSmoking())
+                        return spaceadder(new String[]{advice[5],advice[19],advice[20]});
+                    else
+                        return advice[5];
+                }
+                else
+                    return spaceadder(new String[]{advice[1],advice[3]});
             case 4:
                 if(arrScale[4]==Scale.HIGH){
                     if(pdResults.getYesnoanswer().isSmoking()==true) {
@@ -136,7 +195,14 @@ public class Analysis {
                     return advice[1]+advice[3];
                 }
                 break;
-
+            case 5:
+                if (arrScale[5]==Scale.HIGH)
+                    return spaceadder(new String[]{advice[2],advice[8],advice[16]});
+                else{
+                    if(pdResults.getYesnoanswer().isPregnancy())
+                        return spaceadder(new String[]{advice[26],advice[2],advice[15]+"בהריון רמת השתנן יורדת"});
+                    return spaceadder(new String[]{advice[26],advice[2],advice[15]});
+                }
 
             default:
                 break;
@@ -172,6 +238,36 @@ public class Analysis {
         }
         return Scale.NOTMATCH;
     }
+    //1 Neut
+    public Scale Neut1(int neutrophil){
+        if(28<=neutrophil && neutrophil<=54){
+            return Scale.NORMAL;
+        }
+        else if(54<neutrophil)
+            return Scale.HIGH;
+        else
+            return Scale.LOW;
+    }
+    //2
+    public Scale Lymph2(int lmp){
+        if(36<=lmp && lmp<=52){
+            return Scale.NORMAL;
+        }
+        else if(52<lmp)
+            return Scale.HIGH;
+        else
+            return Scale.LOW;
+    }
+    //3 RBC
+    public Scale RBCscale3(int rbc){
+        if(4.5<=rbc && rbc<=6){
+            return Scale.NORMAL;
+        }
+        else if(6<rbc)
+            return Scale.HIGH;
+        else
+            return Scale.LOW;
+    }
     //4 HTC
     public Scale HTCscale4(int blood){
         if(!pdResults.getYesnoanswer().isFemale()) {//man
@@ -193,6 +289,25 @@ public class Analysis {
                 return Scale.LOW;
 
         }
+    }
+    //5 Urea
+    public Scale UreaScale5(int urea){
+        float min=17,max=43;
+        float temp=urea;
+        if(pdResults.Yesnoanswer.isEastPerson()) {
+            temp = (float) (urea * 1.1);
+            min*=1.1;
+            max*=1.1;
+        }
+        if(min<=temp && temp<=max){
+            return Scale.NORMAL;
+        }
+        else if(max<temp)
+            return Scale.HIGH;
+        else
+            return Scale.LOW;
+
+
     }
 
     public String spaceadder(String[] str){

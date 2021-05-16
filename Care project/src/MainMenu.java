@@ -37,6 +37,8 @@ public class MainMenu extends JFrame implements ActionListener {
             if(firstpatient!=null) {
                 firstpatient.setYesnoanswer(new YesNo());
             }
+            else
+                JOptionPane.showMessageDialog(this, "fill in patient data before Yes No", "Error",JOptionPane.WARNING_MESSAGE);
         }
         else if(e.getSource()==btmButtons[3]){//diagnosis
             if(firstpatient!=null) {
@@ -46,6 +48,8 @@ public class MainMenu extends JFrame implements ActionListener {
                 repaint();
                 revalidate();
             }
+            else
+                JOptionPane.showMessageDialog(this, "fill in Yes No ", "Error",JOptionPane.WARNING_MESSAGE);
         }
 
 
