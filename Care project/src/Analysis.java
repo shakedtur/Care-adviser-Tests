@@ -68,6 +68,9 @@ public class Analysis {
 
     private void tableConstructor() {
         infoTable = new JTable(rowConstructor(), columnNames);
+        //infoTable.setGridColor(Color.cyan);
+        infoTable.setBackground(Color.WHITE);
+
     }
     private Object[][] rowConstructor() {
         Object[][] data = new Object[linesnumber][columnNames.length];
@@ -80,11 +83,11 @@ public class Analysis {
                 data[i][j++] = SickAnalysis(i);
                 String temp = Adviser(i);
                 data[i][j++] = temp;
-                Summary += " " + temp + "\n";
+                Summary += " " + temp + "/n";
             }
         }
         //TODO remove note!!
-        //JOptionPane.showMessageDialog(new JFrame(), Summary, ":)", JOptionPane.NO_OPTION);
+        JOptionPane.showMessageDialog(new JFrame(), Summary, ":)", JOptionPane.NO_OPTION);
 
         return data;
     }
@@ -103,7 +106,11 @@ public class Analysis {
         //4
         arrScale[4]=HTCscale4(pdResults.getHCT());
         arrScale[5]=UreaScale5(pdResults.getUrea());
-
+        arrScale[6]=Hbscale6(pdResults.getHB());
+        arrScale[7]=KeratinScale7(pdResults.getKeratin());
+        arrScale[8]=Ironscale8(pdResults.getIron());
+        arrScale[9]=HDLscale9(pdResults.getHDL());
+        arrScale[10]=Alkalinescale10(pdResults.getAlkaline());
         for (int i=0;i<arrScale.length;i++){
             if(arrScale[i]!=Scale.NORMAL){
                 IrregularValue[i]=true;
@@ -140,7 +147,7 @@ public class Analysis {
                 else
                     return spaceadder(new String[]{sick[1],sick[3]});
             case 4:
-                if (arrScale[2]==Scale.HIGH)
+                if (arrScale[4]==Scale.HIGH)
                     return sick[19];
                 else if(arrScale[4]==Scale.LOW)
                     return spaceadder(new String[]{sick[1],sick[3]});
@@ -152,6 +159,47 @@ public class Analysis {
                     if(pdResults.getYesnoanswer().isPregnancy())
                         return "בהריון כנראה";
                     return spaceadder(new String[]{sick[26],sick[2],sick[15]});
+                }
+            case 6:
+                if (arrScale[6] == Scale.LOW)
+                {
+                    return spaceadder(new String[]{sick[1],sick[6],sick[17]});
+                }
+
+            case 7:
+                if (arrScale[7] == Scale.LOW)
+                {
+                    return sick[26];
+                }
+                if (arrScale[7] == Scale.HIGH)
+                {
+                    return spaceadder(new String[]{sick[16],sick[18],sick[24]});
+                }
+
+            case 8:
+                if (arrScale[8] == Scale.HIGH)
+                {
+                    return sick[7];
+                }
+                if (arrScale[8] == Scale.LOW)
+                {
+                    return sick[26];
+                }
+
+            case 9:
+                if (arrScale[9] == Scale.LOW)
+                {
+                    return spaceadder(new String[]{sick[4],sick[13],sick[22]});
+                }
+
+            case 10:
+                if (arrScale[10] == Scale.HIGH)
+                {
+                    return spaceadder(new String[]{sick[12],sick[15],sick[21],sick[25]});
+                }
+                if (arrScale[10] == Scale.LOW)
+                {
+                    return spaceadder(new String[]{sick[10],sick[26]});
                 }
 
 
@@ -203,6 +251,48 @@ public class Analysis {
                         return spaceadder(new String[]{advice[26],advice[2],advice[15]+"בהריון רמת השתנן יורדת"});
                     return spaceadder(new String[]{advice[26],advice[2],advice[15]});
                 }
+            case 6:
+                if (arrScale[6] == Scale.LOW)
+                {
+                    return spaceadder(new String[]{advice[1],advice[6],advice[17]});
+                }
+
+            case 7:
+                if (arrScale[7] == Scale.LOW)
+                {
+                    return advice[26];
+                }
+                if (arrScale[7] == Scale.HIGH)
+                {
+                    return spaceadder(new String[]{advice[16],advice[18],advice[24]});
+                }
+
+            case 8:
+                if (arrScale[8] == Scale.HIGH)
+                {
+                    return advice[7];
+                }
+                if (arrScale[8] == Scale.LOW)
+                {
+                    return advice[26];
+                }
+
+            case 9:
+                if (arrScale[9] == Scale.LOW)
+                {
+                    return spaceadder(new String[]{advice[4],advice[13],advice[22]});
+                }
+
+            case 10:
+                if (arrScale[10] == Scale.HIGH)
+                {
+                    return spaceadder(new String[]{advice[12],advice[15],advice[21],advice[25]});
+                }
+                if (arrScale[10] == Scale.LOW)
+                {
+                    return spaceadder(new String[]{advice[10],advice[26]});
+                }
+
 
             default:
                 break;
@@ -283,7 +373,7 @@ public class Analysis {
             if (33 <= blood && blood <= 47) {
                 return Scale.NORMAL;
             }
-            else if(54<blood)
+            else if(47<blood)
                 return Scale.HIGH;
             else
                 return Scale.LOW;
@@ -309,13 +399,224 @@ public class Analysis {
 
 
     }
+    //6  hb
+    public Scale Hbscale6(int hb)
+    {
+        int gil=pdResults.getAge();
+        if(gil<= 17)
+        {
+            if(hb >= 11.5 && hb <= 15.5)
+            {
+                return Scale.NORMAL;
+            }
+            else if(hb < 11.5)
+                return Scale.LOW;
+            return Scale.HIGH;
+        }
+
+        else if(pdResults.getYesnoanswer().isFemale())
+        {
+            if(hb >= 12 && hb <= 16)
+            {
+                return Scale.NORMAL;
+            }
+            else if (hb < 12)
+            {
+                return Scale.LOW;
+            }
+        }
+        else
+        {
+            if(hb >= 12 && hb <= 18)
+            {
+                return Scale.NORMAL;
+            }
+            else if (hb < 12)
+            {
+                return Scale.LOW;
+            }
+            return Scale.HIGH;
+        }
+        return Scale.HIGH;
+    }
+    //7 keratin
+    public Scale KeratinScale7(int Keratin)
+    {
+        int gil=pdResults.getAge();
+        if(gil <=2)
+        {
+            if (Keratin >= 0.2 && Keratin <= 0.5)
+            {
+                return Scale.NORMAL;
+            }
+            else if (Keratin>0.5)
+            {
+                return Scale.HIGH;
+            }
+            else return Scale.LOW;
+        }
+        else if (gil <= 17)
+        {
+            if (Keratin >= 0.5 && Keratin <= 1)
+            {
+                return Scale.NORMAL;
+            }
+            else if (Keratin>1)
+            {
+                return Scale.HIGH;
+            }
+            else return Scale.LOW;
+        }
+        else if (gil <= 59)
+        {
+            if (Keratin >= 0.6 && Keratin <= 1)
+            {
+                return Scale.NORMAL;
+            }
+            else if (Keratin>1)
+            {
+                return Scale.HIGH;
+            }
+            else return Scale.LOW;
+        }
+        else
+        {
+            if (Keratin >= 0.6 && Keratin <= 1.2)
+            {
+                return Scale.NORMAL;
+            }
+            else if (Keratin>1.2)
+            {
+                return Scale.HIGH;
+            }
+            else return Scale.LOW;
+        }
+    }
+
+    //8 iron
+    public Scale Ironscale8(int iron)
+    {
+        if(pdResults.getYesnoanswer().isFemale())
+        {
+            if(iron >= 0.8 * 60 &&	iron <= 0.8 * 160)
+            {
+                return Scale.NORMAL;
+            }
+            else if (iron > 0.8 * 160)
+            {
+                return Scale.HIGH;
+            }
+            else return Scale.LOW;
+        }
+        else
+        {
+            if(iron >= 60 && iron <= 160)
+            {
+                return Scale.NORMAL;
+            }
+            else if (iron > 160)
+            {
+                return Scale.HIGH;
+            }
+            else return Scale.LOW;
+        }
+    }
+
+    //9
+    public Scale HDLscale9(int hdl)
+    {
+        if(pdResults.getYesnoanswer().isEthiopian())
+        {
+            if(pdResults.getYesnoanswer().isFemale())
+            {
+                if(hdl <= 82*1.2 && hdl >= 34*1.2)
+                {
+                    return Scale.NORMAL	;
+                }
+                else if(hdl > 82*1.2)
+                {
+                    return Scale.HIGH;
+                }
+                else return Scale.LOW;
+            }
+            else
+            {
+                if(hdl <= 62*1.2 && hdl >= 29*1.2)
+                {
+                    return Scale.NORMAL	;
+                }
+                else if(hdl > 62*1.2)
+                {
+                    return Scale.HIGH;
+                }
+                else return Scale.LOW;
+            }
+        }
+        else
+        {
+            if(pdResults.getYesnoanswer().isFemale())
+            {
+                if(hdl <= 82 && hdl >= 34)
+                {
+                    return Scale.NORMAL	;
+                }
+                else if(hdl > 82)
+                {
+                    return Scale.HIGH;
+                }
+                else return Scale.LOW;
+            }
+            else
+            {
+                if(hdl <= 62 && hdl >= 29)
+                {
+                    return Scale.NORMAL	;
+                }
+                else if(hdl > 62)
+                {
+                    return Scale.HIGH;
+                }
+                else return Scale.LOW;
+            }
+        }
+    }
+
+    //10
+    //Alkalinescale10
+    public Scale Alkalinescale10(int alkaline)
+    {
+        if(pdResults.getYesnoanswer().isEastPerson())
+        {
+            if(alkaline >= 60 && alkaline <= 120)
+            {
+                return Scale.NORMAL	;
+            }
+            else if(alkaline > 120)
+            {
+                return Scale.HIGH;
+            }
+            else return Scale.LOW;
+        }
+        else
+        {
+            if(alkaline >= 30 && alkaline <= 90)
+            {
+                return Scale.NORMAL	;
+            }
+            else if(alkaline > 90)
+            {
+                return Scale.HIGH;
+            }
+            else return Scale.LOW;
+        }
+    }
 
     public String spaceadder(String[] str){
         String temp=new String();
         for(int i=0;i<str.length;i++){
             temp+=str[i]+", ";
         }
-        return temp;
+        return temp+="\n";
     }
     public String printScale(Scale s){
         if(s==Scale.LOW){

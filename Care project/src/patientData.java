@@ -11,6 +11,7 @@ public class patientData extends JFrame {
     public String[] paramtername={"WBC","Neut","Lymph","RBC","HCT","Urea","HB","Keratin","Iron","HDL","Alkaline"};
     public int[] HealthResults={WBC,Neut,Lymph,RBC,HCT,Urea,HB,Keratin,Iron,HDL,Alkaline};
     public YesNo Yesnoanswer;
+    public Analysis analysis;
     //panels
     private JPanel[] JPanelist;
     private JPanel insidePanel;
@@ -29,7 +30,7 @@ public class patientData extends JFrame {
     private JLabel RBCLable;
 
     private JTextField[] Jtextlist;
-    private String[] Jtextstring={"5000","33","40","5","32","20","14","3","100","30","61"};
+    private String[] Jtextstring={"500","33","10","5","14","20","14","3","100","30","61"};
     private JTextField textage;
     private JTextField WBCtext;
     private JTextField Neuttext;
@@ -55,6 +56,13 @@ public class patientData extends JFrame {
 
     }
 
+    public Analysis getAnalysis() {
+        return analysis;
+    }
+
+    public void setAnalysis() {
+        this.analysis = new Analysis(this);
+    }
 
     public YesNo getYesnoanswer() {
         return Yesnoanswer;

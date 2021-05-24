@@ -1,15 +1,25 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainMenu extends JFrame implements ActionListener {
     private JMenuItem[] mi;
     private JMenuBar mb;
+    private JMenu m1, m2, m3;
+    private String[] names = { "Home", "File", "data", "None", "About" };
+    //image
+    private final String pathfile="src/doctor.jpg";
+    public BufferedImage image;
     private patientData firstpatient;
+    private JPanel panel;
     public  ArrayList <patientData> patientlist;
-
+    private JScrollPane tableshow;
     //Buttons
     private JPanel bottomRow;
     private JButton[] btmButtons;
@@ -17,11 +27,62 @@ public class MainMenu extends JFrame implements ActionListener {
     public MainMenu(){
         super("Care Adviser");
         setSize(600,700);
-        mb = new JMenuBar();
         bottomRowConstructor();
         add(bottomRow,BorderLayout.SOUTH);
+        CrateMenubar();
+        setImage();
+
     }
 
+    private void CrateMenubar(){
+        mb = new JMenuBar();
+        m1 = new JMenu("Home");
+        m2 = new JMenu("Info");
+        m3 = new JMenu("Help");
+        mi = new JMenuItem[names.length];
+        for (int i = 0; i < names.length; i++) {
+            mi[i] = new JMenuItem(names[i]);
+            mi[i].addActionListener(this);
+        }
+
+        m1.add(mi[0]);
+
+        m2.add(mi[1]);
+        m2.addSeparator();
+        m2.add(mi[2]);
+        m2.addSeparator();
+        m2.add(mi[3]);
+
+        m3.add(mi[4]);
+
+        mb.add(m1);
+        mb.add(m2);
+        mb.add(m3);
+        setJMenuBar(mb);
+    }
+    private void setImage() {
+
+        try {
+            image = ImageIO.read(new File(pathfile));
+            panel=new imagepanel();
+            panel.setBackground(Color.GREEN);
+            panel.setVisible(true);
+            add(panel,BorderLayout.CENTER);
+            repaint();
+        } catch (IOException exception) {
+            JOptionPane.showMessageDialog(this, "Cannot load image");
+        }
+
+    }
+    public class imagepanel extends JPanel{
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (image != null) {
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
+        }
+    }
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==btmButtons[0]){//login
@@ -40,20 +101,35 @@ public class MainMenu extends JFrame implements ActionListener {
             else
                 JOptionPane.showMessageDialog(this, "fill in patient data before Yes No", "Error",JOptionPane.WARNING_MESSAGE);
         }
-        else if(e.getSource()==btmButtons[3]){//diagnosis
+        else if(e.getSource()==btmButtons[3]&&firstpatient!=null&&firstpatient.Yesnoanswer!=null){//diagnosis show table
+            panel.setVisible(false);
             if(firstpatient!=null) {
-                Analysis ana = new Analysis(firstpatient);
-                //ana.diagnosis();
-                add(ana.getScrollPane(),BorderLayout.CENTER);
-                repaint();
-                revalidate();
-            }
+//                    Analysis ana = new Analysis(firstpatient);
+                    firstpatient.setAnalysis();
+                    //ana.diagnosis();
+                    if(tableshow!=null){
+                        remove(tableshow);
+                    }
+                    JTable t=new JTable();
+
+                    tableshow=firstpatient.getAnalysis().getScrollPane();
+                    add(tableshow);
+                    repaint();
+                    revalidate();
+                }
             else
                 JOptionPane.showMessageDialog(this, "fill in Yes No ", "Error",JOptionPane.WARNING_MESSAGE);
+            }
+        //menu bar buttons
+        else if(e.getSource()==mi[0]){
+            panel.setVisible(true);
+        }
+        else if (e.getSource() == mi[4]) {
+            printHelp();
         }
 
+        }
 
-    }
 
     private void bottomRowConstructor() {
         bottomRow = new JPanel();
@@ -71,6 +147,9 @@ public class MainMenu extends JFrame implements ActionListener {
             // Add the buttons to the buttomRow panel.
             bottomRow.add(btmButtons[i]);
         }
+    }
+    public void printHelp() {
+        JOptionPane.showMessageDialog(this, "Created by Shaked Turgergeman \n Sagi");
     }
 
     public static void main(String[] args) {
