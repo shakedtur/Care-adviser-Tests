@@ -1,141 +1,122 @@
-
-    import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.*;
+import java.util.Scanner;
 
-    public class NewUser extends JFrame {
-        JButton create;
-        JPanel newUserPanel;
-        JTextField txuserer;
-        JTextField passer;
-       private boolean passcheck(int s , int d , int c , int u , int l)
-       {
-    	  return (s > 0 && (u > 0 || l > 0) && d > 0 && (c >= 8 && c <= 10) );
-       }
-       private boolean userncheck(int c , int d , int s)
-       {
-    	   return ((c >= 6 && c <= 8) && d <= 2 && s == 0);
-       }
+public class login extends JFrame {
+    JButton blogin;
+    JPanel loginpanel;
+    JTextField txuser;
+    JTextField pass;
+    JButton newUSer;
+    JLabel username;
+    JLabel password;
+    boolean loginsuccess=false;
 
+    public login(){
+        super("Login Autentification");
 
-        public NewUser(){
-            super("Registration");
+        blogin = new JButton("Login");
+        loginpanel = new JPanel();
+        txuser = new JTextField(15);
+        pass = new JPasswordField(15);
+        newUSer = new JButton("New User?");
+        username = new JLabel("User - ");
+        password = new JLabel("Pass - ");
 
-            create = new JButton("Create");
-            newUserPanel = new JPanel();
-            txuserer = new JTextField(15);
-            passer = new JPasswordField(15);
-
-
-            setSize(300,200);
-            setLocation(500,280);
-            newUserPanel.setLayout (null);
+        setSize(300,200);
+        setLocation(500,280);
+        loginpanel.setLayout (null);
 
 
-            txuserer.setBounds(70,30,150,20);
-            passer.setBounds(70,65,150,20);
-            create.setBounds(110,100,80,20);
+        txuser.setBounds(70,30,150,20);
+        pass.setBounds(70,65,150,20);
+        blogin.setBounds(110,100,80,20);
+        newUSer.setBounds(110,135,80,20);
+        username.setBounds(20,28,80,20);
+        password.setBounds(20,63,80,20);
 
-            newUserPanel.add(create);
-            newUserPanel.add(txuserer);
-            newUserPanel.add(passer);
+        loginpanel.add(blogin);
+        loginpanel.add(txuser);
+        loginpanel.add(pass);
+        loginpanel.add(newUSer);
+        loginpanel.add(username);
+        loginpanel.add(password);
 
-            getContentPane().add(newUserPanel);
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setVisible(true);
+        getContentPane().add(loginpanel);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
 
-            Writer writer = null;
-            File check = new File("userPass.txt");
-            if(check.exists()){
+        Writer writer = null;
+        File check = new File("userPass.txt");
+        if(check.exists()){
 
-                //Checks if the file exists. will not add anything if the file does exist.
-            }else{
-                try{
-                    File texting = new File("userPass.txt");
-                    writer = new BufferedWriter(new FileWriter(texting));
-                    writer.write("message");
-                }catch(IOException e){
-                    e.printStackTrace();
-                }
+            //Checks if the file exists. will not add anything if the file does exist.
+        }else{
+            try{
+                File texting = new File("userPass.txt");
+                writer = new BufferedWriter(new FileWriter(texting));
+                writer.write("message");
+            }catch(IOException e){
+                e.printStackTrace();
             }
-
-
-
-
-            create.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                        File file = new File("userPass.txt");
-                        Scanner scan = new Scanner(file);;
-
-                        FileWriter filewrite = new FileWriter(file, true);
-
-                        String usertxter = " ";
-                        String passtxter = " ";
-                        String punamer = txuserer.getText();
-                        String ppaswder = passer.getText();
-                        int lower=0, upper=0, digits=0 , spacial = 0;
-                        int lower1=0, upper1=0, digits1=0 , spacial1 = 0;
-                        char [] array = ppaswder.toCharArray();
-                        char [] array1 = punamer.toCharArray();
-                        for ( int i = 0;  i < ppaswder.length(); i++)
-                        {
-                        	if(array[i] == ('!') || array[i] == ('@') || array[i] == ('#') || array[i] == ('$') || array[i] == ('%') || array[i] == ('^') || array[i] == ('&') || array[i] == ('*'))
-                        		spacial++;                   
-                            if(Character.isDigit(array[i]))
-                               digits++;
-                            if(Character.isLowerCase(array[i]))
-                               lower++;
-                            if(Character.isUpperCase(array[i]))
-                               upper++;                      
-                        }
-                        for ( int i = 0;  i < punamer.length(); i++)
-                        {
-                        	if(Character.isDigit(array1[i]))
-                                digits1++;
-                        	if(Character.isLowerCase(array1[i]))
-                                lower1++;
-                             if(Character.isUpperCase(array1[i]))
-                                upper1++; 
-                             if(array1[i] == ('!') || array1[i] == ('@') || array1[i] == ('#') || array1[i] == ('$') || array1[i] == ('%') || array1[i] == ('^') || array1[i] == ('&') || array1[i] == ('*'))
-                         		spacial1++;        
-                        }
-                        while (scan.hasNext()) {
-                            usertxter = scan.nextLine();
-                            passtxter = scan.nextLine();
-                        }
-                    if(passcheck(spacial,digits,ppaswder.length(),upper,lower) && userncheck(punamer.length(),digits1,spacial1))
-                    {
-                        if(punamer.equals(usertxter) && ppaswder.equals(passtxter)) {
-                            JOptionPane.showMessageDialog(null,"Username is already in use");
-                            txuserer.setText("");
-                            passer.setText("");
-                            txuserer.requestFocus();
-
-                        }
-                        else if(punamer.equals("") && ppaswder.equals("")){
-                            JOptionPane.showMessageDialog(null,"Please insert Username and Password");
-                        }
-                        else {
-                            filewrite.write(punamer+"\r\n" +ppaswder+ "\r\n");
-                            filewrite.close();
-                            JOptionPane.showMessageDialog(null,"Account has been created.");
-                            dispose();
-                            login log = new login();
-
-                        	}
-                    }
-                    else 
-                    {
-                    	 JOptionPane.showMessageDialog(null,"password or username not as requseted");
-                    }
-                    } catch (IOException d) {
-                        d.printStackTrace();
-                    }
-
-                }
-            });
         }
+
+
+
+
+        blogin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    File file = new File("userPass.txt");
+                    Scanner scan = new Scanner(file);;
+                    String line = null;
+                    FileWriter filewrite = new FileWriter(file, true);
+
+                    String usertxt = " ";
+                    String passtxt = " ";
+                    String puname = txuser.getText();
+                    String ppaswd = pass.getText();
+
+
+                    while (scan.hasNext()) {
+                        usertxt = scan.nextLine();
+                        passtxt = scan.nextLine();
+
+                    }
+                    if(puname.equals(usertxt) && ppaswd.equals(passtxt)) {
+//                        MainMenu menu =new MainMenu();
+//                        patientData qframe=new patientData();
+                        loginsuccess=true;
+                        dispose();
+                    }
+
+                    else if(puname.equals("") && ppaswd.equals("")){
+                        JOptionPane.showMessageDialog(null,"Please insert Username and Password");
+                    }
+                    else {
+
+                        JOptionPane.showMessageDialog(null,"Wrong Username / Password");
+                        txuser.setText("");
+                        pass.setText("");
+                        txuser.requestFocus();
+                    }
+
+
+                } catch (IOException d) {
+                    d.printStackTrace();
+                }
+
+            }
+        });
+
+        newUSer.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                NewUser user = new NewUser();
+                dispose();
+
+            }
+        });
     }
+}
