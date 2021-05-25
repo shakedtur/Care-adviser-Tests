@@ -5,11 +5,25 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 
+    import javax.swing.*;
+    import java.awt.*;
+    import java.awt.event.*;
+    import java.io.*;
+    import java.util.*;
+
     public class NewUser extends JFrame {
         JButton create;
         JPanel newUserPanel;
         JTextField txuserer;
         JTextField passer;
+        private boolean passcheck(int s , int d , int c , int u , int l)
+        {
+            return (s > 0 && (u > 0 || l > 0) && d > 0 && (c >= 8 && c <= 10) );
+        }
+        private boolean userncheck(int c , int d , int s)
+        {
+            return ((c >= 6 && c <= 8) && d <= 2 && s == 0);
+        }
 
 
         public NewUser(){
@@ -68,30 +82,60 @@ import java.util.*;
                         String passtxter = " ";
                         String punamer = txuserer.getText();
                         String ppaswder = passer.getText();
+                        int lower=0, upper=0, digits=0 , spacial = 0;
+                        int lower1=0, upper1=0, digits1=0 , spacial1 = 0;
+                        char [] array = ppaswder.toCharArray();
+                        char [] array1 = punamer.toCharArray();
+                        for ( int i = 0;  i < ppaswder.length(); i++)
+                        {
+                            if(array[i] == ('!') || array[i] == ('@') || array[i] == ('#') || array[i] == ('$') || array[i] == ('%') || array[i] == ('^') || array[i] == ('&') || array[i] == ('*'))
+                                spacial++;
+                            if(Character.isDigit(array[i]))
+                                digits++;
+                            if(Character.isLowerCase(array[i]))
+                                lower++;
+                            if(Character.isUpperCase(array[i]))
+                                upper++;
+                        }
+                        for ( int i = 0;  i < punamer.length(); i++)
+                        {
+                            if(Character.isDigit(array1[i]))
+                                digits1++;
+                            if(Character.isLowerCase(array1[i]))
+                                lower1++;
+                            if(Character.isUpperCase(array1[i]))
+                                upper1++;
+                            if(array1[i] == ('!') || array1[i] == ('@') || array1[i] == ('#') || array1[i] == ('$') || array1[i] == ('%') || array1[i] == ('^') || array1[i] == ('&') || array1[i] == ('*'))
+                                spacial1++;
+                        }
                         while (scan.hasNext()) {
                             usertxter = scan.nextLine();
                             passtxter = scan.nextLine();
                         }
+                        if(passcheck(spacial,digits,ppaswder.length(),upper,lower) && userncheck(punamer.length(),digits1,spacial1))
+                        {
+                            if(punamer.equals(usertxter) && ppaswder.equals(passtxter)) {
+                                JOptionPane.showMessageDialog(null,"Username is already in use");
+                                txuserer.setText("");
+                                passer.setText("");
+                                txuserer.requestFocus();
 
-                        if(punamer.equals(usertxter) && ppaswder.equals(passtxter)) {
-                            JOptionPane.showMessageDialog(null,"Username is already in use");
-                            txuserer.setText("");
-                            passer.setText("");
-                            txuserer.requestFocus();
+                            }
+                            else if(punamer.equals("") && ppaswder.equals("")){
+                                JOptionPane.showMessageDialog(null,"Please insert Username and Password");
+                            }
+                            else {
+                                filewrite.write(punamer+"\r\n" +ppaswder+ "\r\n");
+                                filewrite.close();
+                                JOptionPane.showMessageDialog(null,"Account has been created.");
+                                dispose();
+                                login log = new login();
 
+                            }
                         }
-                        else if(punamer.equals("") && ppaswder.equals("")){
-                            JOptionPane.showMessageDialog(null,"Please insert Username and Password");
-                        }
-                        else {
-                            filewrite.write(punamer+"\r\n" +ppaswder+ "\r\n");
-                            filewrite.close();
-                            JOptionPane.showMessageDialog(null,"Account has been created.");
-                            dispose();
-                            login log = new login();
-
-
-
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null,"password or username not as requseted");
                         }
                     } catch (IOException d) {
                         d.printStackTrace();
@@ -100,7 +144,6 @@ import java.util.*;
                 }
             });
         }
-
     }
 
 
