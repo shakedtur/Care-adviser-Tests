@@ -13,6 +13,7 @@ public class MainMenu extends JFrame implements ActionListener {
     private JMenuBar mb;
     private JMenu m1, m2, m3;
     private String[] names = { "Home", "File", "data", "None", "About" };
+
     //image
     private final String pathfile="src/doctor.jpg";
     public BufferedImage image;
@@ -27,6 +28,7 @@ public class MainMenu extends JFrame implements ActionListener {
     public MainMenu(){
         super("Care Adviser");
         setSize(600,700);
+        setLocationRelativeTo(null);
         bottomRowConstructor();
         add(bottomRow,BorderLayout.SOUTH);
         CrateMenubar();

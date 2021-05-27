@@ -1,8 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class Analysis {
-
+    private final static String PATHFILE="data.txt";
     private patientData pdResults;
     private final int datanumber=11;
     private Scale[] arrScale;
@@ -13,7 +18,7 @@ public class Analysis {
     private static final String[] columnNames = { "Result name", "proper", "Sick", "recomend Care" };
     private JTable infoTable;
     private JScrollPane scrollPane;
-    private String Summary;
+    private String Summary="";
     private static final String[] sick={"בריא","אנמיה","דיאטה","דימום","היפרליפידמיה ","הפרעה ביצירת הדם / תאי דם ","הפרעה המטולוגית ","הרעלת ברזל ","התייבשות",
     "זיהום","חוסר בויטמנים","מחלה ויראלית","מחלות בדרכי המרה ","מחלות לב ","מחלת דם ","מחלת כבד ","מחלת כליה ","מחסור בברזל","מחלות שריר ","מעשנים",
     "מחלת ריאות ","פעילות יתר של בלוטת התריס ","סוכרת מבוגרים ","סרטן ","צריכה מוגברת של בשר ","שימוש בתרופות שונות ","תת תזונה"};
@@ -57,7 +62,11 @@ public class Analysis {
             b=false;
         }
         diagnosis();
-        tableConstructor();
+        try {
+            tableConstructor();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         scrollPane = new JScrollPane(infoTable);
 
     }
@@ -66,36 +75,70 @@ public class Analysis {
         return scrollPane;
     }
 
-    private void tableConstructor() {
+    private void tableConstructor() throws FileNotFoundException {
         infoTable = new JTable(rowConstructor(), columnNames);
         //infoTable.setGridColor(Color.cyan);
         infoTable.setBackground(Color.WHITE);
 
     }
-    private Object[][] rowConstructor() {
+    private Object[][] rowConstructor() throws FileNotFoundException {
         Object[][] data = new Object[linesnumber][columnNames.length];
         String[] paramterNames=pdResults.getParamtername();
+        int count=1;
         for(int i=0;i<linesnumber;i++){
             int j=0;
             data[i][j++]=paramterNames[i];
             data[i][j++]=printScale(arrScale[i]);
             if(IrregularValue[i]) {
-                data[i][j++] = SickAnalysis(i);
-                String temp = Adviser(i);
-                data[i][j++] = temp;
-                Summary += " " + temp + "/n";
+                Summary += " " + count+".";
+                String sicktemp=SickAnalysis(i);
+                data[i][j++]=sicktemp;
+                Summary += " " + sicktemp + "\n"+"Recommend Care: \n";
+                String tempadvice = Adviser(i);
+                data[i][j++] = tempadvice;
+                Summary += " " + tempadvice + "\n";
+                count++;
             }
         }
         //TODO remove note!!
         JOptionPane.showMessageDialog(new JFrame(), Summary, ":)", JOptionPane.NO_OPTION);
-
+        saveDataFile();
         return data;
     }
-//    private void stam(){
-//        diagnosis();
-//        SickAnalysis(0);
-//        Adviser(0);
-//    }
+
+    public void saveDataFile() throws FileNotFoundException{
+
+        Writer writer = null;
+        File check = new File("data.txt");
+        if(!check.exists()) {
+            //Checks if the file exists. will not add anything if the file does exist.
+            try {
+                File texting = new File("data.txt");
+                writer = new BufferedWriter(new FileWriter(texting));
+                writer.write("message");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        try {
+            File filedata = new File(PATHFILE);
+            Scanner scan = new Scanner(filedata);
+            FileWriter filewriter = new FileWriter(filedata, true);
+            filewriter.write("++++++++++++++++++++++++++++++++++\n"
+                    +"ID: "+pdResults.getId()+"\n"
+                    +"Name: "+ pdResults.getFirstname()
+                    +" "+pdResults.getLastname()+"\n"
+                    +Summary
+                    +"++++++++++++++++++++++++++++++++++\n");
+            filewriter.close();
+        }
+        catch (IOException ioe){
+            ioe.printStackTrace();
+        }
+
+
+    }
 
     public void diagnosis(){
         //0

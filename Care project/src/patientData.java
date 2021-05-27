@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public class patientData extends JFrame {
     //values
     private int age;
+    private String firstname,lastname,id;
     private final int VALUES=11;
     private int WBC,Neut,Lymph,RBC,HCT,Urea,HB,Keratin,Iron,HDL,Alkaline;//importent to update the number of VALUEs
     public String[] paramtername={"WBC","Neut","Lymph","RBC","HCT","Urea","HB","Keratin","Iron","HDL","Alkaline"};
@@ -20,6 +21,7 @@ public class patientData extends JFrame {
     private  JPanel NeutPanel;
     private JPanel LymphPanel;
     private  JPanel RBCPanel;
+    private JPanel FirstNamepnl,LastNamepnl,IDpnl;
 
     private JLabel[] JLabelist;
     private String [] jLableString={"WBC","Neut %","Lymph %","RBC","HCT 37-54% ","Urea 17-43","HB 12-16","Keratin 3-17","Iron 60-160","HDL 29-62","Alkaline 60"};
@@ -28,6 +30,7 @@ public class patientData extends JFrame {
     private  JLabel NeutLable;
     private JLabel LymphLable;
     private JLabel RBCLable;
+    private JLabel FirstNameLable,LastNameLable,IDLable;
 
     private JTextField[] Jtextlist;
     private String[] Jtextstring={"500","33","10","5","14","20","14","3","100","30","61"};
@@ -36,6 +39,7 @@ public class patientData extends JFrame {
     private JTextField Neuttext;
     private JTextField Lymphtext;
     private  JTextField RBCtext;
+    private JTextField FirstNameText,LastNameText,IDText;
 
     private JButton okButton;
 
@@ -76,7 +80,6 @@ public class patientData extends JFrame {
         setTitle("health qeustions ");
         //setSize(1200,700);
         insidePanel=new JPanel();
-
         insidePanel.setLayout(new BoxLayout(insidePanel,BoxLayout.Y_AXIS));
         agePanel=CreateAgeP();
 
@@ -88,7 +91,7 @@ public class patientData extends JFrame {
 
 
         insidePanel.add(agePanel);
-
+        insidePanel.add(CreatePresonaldata());
 
         for(int i=0;i<VALUES;i++){
             JPanelist[i]=new JPanel();
@@ -129,6 +132,9 @@ public class patientData extends JFrame {
                     throw new Exception("wrong age");
                 }
                 age = Integer.parseInt(textage.getText());
+                firstname= String.valueOf(FirstNameText.getText());
+                lastname= String.valueOf(LastNameText.getText());
+                id= String.valueOf(IDText.getText());
                 WBC=(Integer.parseInt(Jtextlist[0].getText()));
                 Neut=Integer.parseInt(Jtextlist[1].getText());
                 Lymph=Integer.parseInt(Jtextlist[2].getText());
@@ -144,9 +150,9 @@ public class patientData extends JFrame {
                 //TODO remove notes from here!!!
                 //JOptionPane.showMessageDialog(patientData.this, "Success", ":)", JOptionPane.NO_OPTION);
                 //System.out.println("ok button worked");
-                for(int i:HealthResults){
-                    System.out.println(i);
-                }
+//                for(int i:HealthResults){
+//                    System.out.println(i);
+//                }
                 setVisible(false);
 
             }
@@ -175,51 +181,34 @@ public class patientData extends JFrame {
         return agepanle;
 
     }
-    private JPanel CreateWBCP(){
-        JPanel WBCpanle=new JPanel();
-        WBCpanle.setLayout(new FlowLayout());
-        WBCLable=new JLabel("WBC white blod Cells:");
-        WBCtext=new JTextField("5500",3);
-        WBCpanle.add(WBCLable);
-        WBCpanle.add(WBCtext);
-        return WBCpanle;
-//        JPanel WBCpanle=new JPanel();
-//        WBCpanle.setLayout(new FlowLayout());
-//        WBCLable=new JLabel("WBC white blod Cells:");
-//        WBCtext=new JTextField("5500",3);
-//        WBCpanle.add(ageLable);
-//        WBCpanle.add(textage);
-//        WBCpanle.setVisible(true);
-//        return WBCpanle;
-    }
-    private  JPanel CreateNeut(){
-        NeutPanel=new JPanel();
-        NeutPanel.setLayout(new FlowLayout());
-        NeutLable=new JLabel("Neut neutrophil present 0-100 %");
-        Neuttext=new JTextField("30",3);
-        NeutPanel.add(NeutLable);
-        NeutPanel.add(Neuttext);
-        return NeutPanel;
-    }
-    private  JPanel CreateLymph(){
-        LymphPanel=new JPanel();
-        LymphPanel.setLayout(new FlowLayout());
-        LymphLable=new JLabel("Enter your present 0-100%");
-        Lymphtext=new JTextField("50",3);
-        LymphPanel.add(LymphLable);
-        LymphPanel.add(Lymphtext);
-        return LymphPanel;
-    }
-    private  JPanel CreateRBC(){
-        RBCPanel=new JPanel();
-        RBCPanel.setLayout((new FlowLayout()));
-        RBCLable=new JLabel("Enter RBC red blood cells ");
-        RBCtext=new JTextField("5",3);
-        RBCPanel.add(RBCLable);
-        RBCPanel.add(RBCtext);
-        return RBCPanel;
+    private JPanel CreatePresonaldata(){
+        JPanel Personal=new JPanel();
+        Personal.setLayout(new BoxLayout(insidePanel,BoxLayout.Y_AXIS));
+        FirstNamepnl=new JPanel();
+        LastNamepnl=new JPanel();
+        IDpnl=new JPanel();
+        Personal.setLayout(new FlowLayout());
+        FirstNameLable=new JLabel("First name:");
+        FirstNameText=new JTextField("Israel",6);
+        FirstNamepnl.add(FirstNameLable);
+        FirstNamepnl.add(FirstNameText);
+        Personal.add(FirstNamepnl);
+        LastNameLable=new JLabel("Last name:");
+        LastNameText=new JTextField("Israely",6);
+        LastNamepnl.add(LastNameLable);
+        LastNamepnl.add(LastNameText);
+        Personal.add(LastNamepnl);
+        IDLable=new JLabel("ID number:");
+        IDText=new JTextField("123456789",6);
+        IDpnl.add(IDLable);
+        IDpnl.add(IDText);
+        Personal.add(IDpnl);
+
+
+        return Personal;
 
     }
+
 
     public int[] getHealthResults() {
         return HealthResults;
@@ -239,6 +228,30 @@ public class patientData extends JFrame {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getWBC() {
