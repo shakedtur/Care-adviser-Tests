@@ -96,7 +96,7 @@ public class Analysis {
                 Summary += " " + sicktemp + "\n"+"Recommend Care: \n";
                 String tempadvice = Adviser(i);
                 data[i][j++] = tempadvice;
-                Summary += " " + tempadvice + "\n";
+                Summary += " " + tempadvice + "\n"+"====================\n";
                 count++;
             }
         }

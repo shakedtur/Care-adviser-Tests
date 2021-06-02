@@ -1,3 +1,5 @@
+import com.sun.tools.javac.Main;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainMenu extends JFrame implements ActionListener {
     private JMenuItem[] mi;
@@ -24,15 +27,17 @@ public class MainMenu extends JFrame implements ActionListener {
     //Buttons
     private JPanel bottomRow;
     private JButton[] btmButtons;
-    private String[] btmNameStrings = { "login","Patient Data","Yes No q","diagnosis"};
+    private String[] btmNameStrings = { "login             ","Patient Data","Yes No q      ","diagnosis     ","patient          "};
     public MainMenu(){
         super("Care Adviser");
         setSize(600,700);
         setLocationRelativeTo(null);
         bottomRowConstructor();
-        add(bottomRow,BorderLayout.SOUTH);
+        add(bottomRow,BorderLayout.WEST);
         CrateMenubar();
         setImage();
+
+
 
     }
 
@@ -122,6 +127,18 @@ public class MainMenu extends JFrame implements ActionListener {
             else
                 JOptionPane.showMessageDialog(this, "fill in Yes No ", "Error",JOptionPane.WARNING_MESSAGE);
             }
+        else if(e.getSource()==btmButtons[4]){
+            String[] str=new String[4];
+            for (int i=1;i<str.length;i++){
+                str[i]="patirnt "+i;
+            }
+            JComboBox cb = new JComboBox(str);
+            String[] options = { "OK", "Cancel" };
+            String title = "Choose patient";
+            int selection = JOptionPane.showOptionDialog(null, cb, title,
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options,
+                    options[0]);
+        }
         //menu bar buttons
         else if(e.getSource()==mi[0]){
             panel.setVisible(true);
@@ -135,7 +152,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
     private void bottomRowConstructor() {
         bottomRow = new JPanel();
-        bottomRow.setLayout(new FlowLayout());
+        bottomRow.setLayout(new BoxLayout(bottomRow,BoxLayout.Y_AXIS));
         bottomRow.setBackground(Color.CYAN);
 
         // Create 7 buttons as required.
@@ -145,6 +162,7 @@ public class MainMenu extends JFrame implements ActionListener {
             // if (i == 5)
             // btmButtons[i].addMouseListener(new mouseClick());
             // else
+            btmButtons[i].setBackground(Color.WHITE);
             btmButtons[i].addActionListener(this);
             // Add the buttons to the buttomRow panel.
             bottomRow.add(btmButtons[i]);
@@ -154,9 +172,10 @@ public class MainMenu extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(this, "Created by Shaked Turgergeman \n Sagi");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
         //login log=new login();
+
         MainMenu Mainscreen=new MainMenu();
         Mainscreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

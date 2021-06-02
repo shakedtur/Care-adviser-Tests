@@ -49,14 +49,7 @@ public class YesNo extends JFrame {
             arradio[i]=new JRadioButton();
             answerpanel.add(arradio[i]);
         }
-//        for(JRadioButton r:anwRadiobuttons){
-//            r=new JRadioButton();
-//            this.answerpanel.add(r);
-//            answerpanel.add(r);
-//        }
 
-//        smokRadio=new JRadioButton();
-//        answerpanel.add(smokRadio);
         initpanel.add(questionspanel,BorderLayout.WEST);
         initpanel.add(answerpanel,BorderLayout.EAST);
         answerpanel.setVisible(true);
@@ -72,7 +65,7 @@ public class YesNo extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-          setSmoking(arradio[0].isSelected());//??need to check
+          setSmoking(arradio[0].isSelected());
             eastPerson=arradio[1].isSelected();
             female=arradio[2].isSelected();
             lung=arradio[3].isSelected();

@@ -17,28 +17,19 @@ public class patientData extends JFrame {
     private JPanel[] JPanelist;
     private JPanel insidePanel;
     private JPanel agePanel;
-    private JPanel WBCPanel;
-    private  JPanel NeutPanel;
-    private JPanel LymphPanel;
-    private  JPanel RBCPanel;
+
     private JPanel FirstNamepnl,LastNamepnl,IDpnl;
 
     private JLabel[] JLabelist;
     private String [] jLableString={"WBC","Neut %","Lymph %","RBC","HCT 37-54% ","Urea 17-43","HB 12-16","Keratin 3-17","Iron 60-160","HDL 29-62","Alkaline 60"};
     private JLabel ageLable;
-    private JLabel WBCLable;
-    private  JLabel NeutLable;
-    private JLabel LymphLable;
-    private JLabel RBCLable;
+
     private JLabel FirstNameLable,LastNameLable,IDLable;
 
     private JTextField[] Jtextlist;
-    private String[] Jtextstring={"500","33","10","5","14","20","14","3","100","30","61"};
+    private String[] Jtextstring={"500","33","10","5","14","20","14","3","180","30","61"};
     private JTextField textage;
-    private JTextField WBCtext;
-    private JTextField Neuttext;
-    private JTextField Lymphtext;
-    private  JTextField RBCtext;
+
     private JTextField FirstNameText,LastNameText,IDText;
 
     private JButton okButton;
@@ -105,13 +96,7 @@ public class patientData extends JFrame {
 
         }
 
-//        bloodSlider =new JSlider(JSlider.HORIZONTAL,4500,17500,10000);
-//        bloodSlider.setMajorTickSpacing(1);
-//        bloodSlider.setPaintTicks(true);
-//        bloodSlider.setPaintLabels(true);
-//
-//        add(new JLabel("number of white blood cells"), BorderLayout.CENTER);
-//        add(bloodSlider);
+
         okButton=new JButton("Ok");
         okButton.addActionListener(new OkListener() );
         insidePanel.add(okButton);
