@@ -16,6 +16,10 @@ import java.util.*;
         JPanel newUserPanel;
         JTextField txuserer;
         JTextField passer;
+        JLabel username;
+        JLabel password;
+        JLabel userReq ;
+        JLabel passReq ;
         private boolean passcheck(int s , int d , int c , int u , int l)
         {
             return (s > 0 && (u > 0 || l > 0) && d > 0 && (c >= 8 && c <= 10) );
@@ -28,24 +32,34 @@ import java.util.*;
 
         public NewUser(){
             super("Registration");
-
+            username = new JLabel("User - ");
+            password = new JLabel("Pass - ");
+            userReq = new JLabel("the username must be with 6-8 chars and maximum 2 digits ");
+            passReq = new JLabel("the password must be with 8-10 cahrs atleast 1 letter and 1 char and 1 spacial latter");
             create = new JButton("Create");
             newUserPanel = new JPanel();
             txuserer = new JTextField(15);
             passer = new JPasswordField(15);
 
 
-            setSize(300,200);
+            setSize(600,300);
             setLocation(500,280);
             newUserPanel.setLayout (null);
-
-
-            txuserer.setBounds(70,30,150,20);
+            
+            passReq.setBounds(70,25,600,20);
+            userReq.setBounds(70,5,600,20);
+            txuserer.setBounds(70,45,150,20);
             passer.setBounds(70,65,150,20);
             create.setBounds(110,100,80,20);
-
+            username.setBounds(20,45,150,20);
+            password.setBounds(20,65,150,20);
+            
+            newUserPanel.add(userReq);
+            newUserPanel.add(passReq);
             newUserPanel.add(create);
+            newUserPanel.add(username);
             newUserPanel.add(txuserer);
+            newUserPanel.add(password);
             newUserPanel.add(passer);
 
             getContentPane().add(newUserPanel);
