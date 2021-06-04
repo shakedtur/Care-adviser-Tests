@@ -16,10 +16,13 @@ import java.util.*;
         JPanel newUserPanel;
         JTextField txuserer;
         JTextField passer;
+        JTextField IDer;
         JLabel username;
         JLabel password;
         JLabel userReq ;
         JLabel passReq ;
+        JLabel ID;
+        String IDnmber;
         private boolean passcheck(int s , int d , int c , int u , int l)
         {
             return (s > 0 && (u > 0 || l > 0) && d > 0 && (c >= 8 && c <= 10) );
@@ -30,17 +33,23 @@ import java.util.*;
         }
 
 
+        public String getIDnmber() {
+            return IDnmber;
+        }
+
         public NewUser(){
             super("Registration");
             username = new JLabel("User - ");
             password = new JLabel("Pass - ");
+            ID=new JLabel("ID");
             userReq = new JLabel("the username must be with 6-8 chars and maximum 2 digits ");
             passReq = new JLabel("the password must be with 8-10 cahrs atleast 1 letter and 1 char and 1 spacial latter");
             create = new JButton("Create");
+            String DoctorID;
             newUserPanel = new JPanel();
             txuserer = new JTextField(15);
             passer = new JPasswordField(15);
-
+            IDer = new JPasswordField(15);
 
             setSize(600,300);
             setLocation(500,280);
@@ -50,17 +59,20 @@ import java.util.*;
             userReq.setBounds(70,5,600,20);
             txuserer.setBounds(70,45,150,20);
             passer.setBounds(70,65,150,20);
-            create.setBounds(110,100,80,20);
+            IDer.setBounds(70,85,150,20);
+            create.setBounds(120,100,80,20);
             username.setBounds(20,45,150,20);
             password.setBounds(20,65,150,20);
-            
+            ID.setBounds(20,85,150,20);
             newUserPanel.add(userReq);
             newUserPanel.add(passReq);
             newUserPanel.add(create);
             newUserPanel.add(username);
             newUserPanel.add(txuserer);
             newUserPanel.add(password);
+            newUserPanel.add(ID);
             newUserPanel.add(passer);
+            newUserPanel.add(IDer);
 
             getContentPane().add(newUserPanel);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,6 +108,7 @@ import java.util.*;
                         String passtxter = " ";
                         String punamer = txuserer.getText();
                         String ppaswder = passer.getText();
+                        String pIder=IDer.getText();
                         int lower=0, upper=0, digits=0 , spacial = 0;
                         int lower1=0, upper1=0, digits1=0 , spacial1 = 0;
                         char [] array = ppaswder.toCharArray();
@@ -151,6 +164,7 @@ import java.util.*;
                         {
                             JOptionPane.showMessageDialog(null,"password or username not as requseted");
                         }
+                        IDnmber=pIder;
                     } catch (IOException d) {
                         d.printStackTrace();
                     }

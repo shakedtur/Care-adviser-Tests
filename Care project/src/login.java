@@ -12,7 +12,20 @@ public class login extends JFrame {
     JButton newUSer;
     JLabel username;
     JLabel password;
-    boolean loginsuccess=false;
+    NewUser Newuser;
+    public boolean loginsuccess=false;
+
+    public NewUser getNewuser() {
+        return Newuser;
+    }
+
+    public void setLoginsuccess(boolean loginsuccess) {
+        this.loginsuccess = loginsuccess;
+    }
+
+    public boolean isLoginsuccess() {
+        return loginsuccess;
+    }
 
     public login(){
         super("Login Autentification");
@@ -88,7 +101,8 @@ public class login extends JFrame {
                     if(puname.equals(usertxt) && ppaswd.equals(passtxt)) {
 //                        MainMenu menu =new MainMenu();
 //                        patientData qframe=new patientData();
-                        loginsuccess=true;
+                        setLoginsuccess(true);
+                        JOptionPane.showMessageDialog(null,"Welcom Doctor");
                         dispose();
                     }
 
@@ -111,9 +125,11 @@ public class login extends JFrame {
             }
         });
 
+
+
         newUSer.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                NewUser user = new NewUser();
+                Newuser = new NewUser();
                 dispose();
 
             }

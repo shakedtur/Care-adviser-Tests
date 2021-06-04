@@ -28,6 +28,8 @@ public class MainMenu extends JFrame implements ActionListener {
     private JPanel bottomRow;
     private JButton[] btmButtons;
     private String[] btmNameStrings = { "login             ","Patient Data","Yes No q      ","diagnosis     ","patient          "};
+    private  JPanel upPanel;
+    private login log;
     public MainMenu(){
         super("Care Adviser");
         setSize(600,700);
@@ -36,8 +38,6 @@ public class MainMenu extends JFrame implements ActionListener {
         add(bottomRow,BorderLayout.WEST);
         CrateMenubar();
         setImage();
-
-
 
     }
 
@@ -67,6 +67,11 @@ public class MainMenu extends JFrame implements ActionListener {
         mb.add(m3);
         setJMenuBar(mb);
     }
+    private  JPanel CreateupPanel(){
+        JPanel up= new JPanel();
+        //JLabel details=new JLabel("Wellcom"+log.getNewuser().getIDnmber());
+        return up;
+    }
     private void setImage() {
 
         try {
@@ -93,8 +98,14 @@ public class MainMenu extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==btmButtons[0]){//login
-            login log=new login();
-            if(log.loginsuccess==true){}
+            log=new login();
+            if(log.loginsuccess==true){
+                JOptionPane.showMessageDialog(null,"login success");
+//                upPanel=CreateupPanel();
+//                add(upPanel,BorderLayout.NORTH);
+//                upPanel.setVisible(true);
+//                repaint();
+            }
             //TODO complete button just than login
         }
         if(e.getSource()==btmButtons[1]){//Patient data

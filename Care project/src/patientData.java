@@ -73,14 +73,9 @@ public class patientData extends JFrame {
         insidePanel=new JPanel();
         insidePanel.setLayout(new BoxLayout(insidePanel,BoxLayout.Y_AXIS));
         agePanel=CreateAgeP();
-
-
         JPanelist=new JPanel[VALUES];
         Jtextlist=new JTextField[VALUES];
         JLabelist=new JLabel[VALUES];
-
-
-
         insidePanel.add(agePanel);
         insidePanel.add(CreatePresonaldata());
 
@@ -133,23 +128,31 @@ public class patientData extends JFrame {
                 Alkaline=Integer.parseInt(Jtextlist[10].getText());
                 SetHealthVal();
                 //TODO remove notes from here!!!
-                //JOptionPane.showMessageDialog(patientData.this, "Success", ":)", JOptionPane.NO_OPTION);
-                //System.out.println("ok button worked");
-//                for(int i:HealthResults){
-//                    System.out.println(i);
-//                }
+                JOptionPane.showMessageDialog(patientData.this, "Success", ":)", JOptionPane.NO_OPTION);
+
+                if(!isINRange(Neut)||!isINRange(Lymph)||!isINRange(HCT)){
+                    throw new Exception();
+                }
                 setVisible(false);
 
             }
+
             catch (NumberFormatException exception){
-                JOptionPane.showMessageDialog(patientData.this, "Wrong input, try again", "Wrong Input",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(patientData.this, "Wrong age, try again", "Wrong Input",JOptionPane.WARNING_MESSAGE);
             }
             catch (Exception es){
-                JOptionPane.showMessageDialog(patientData.this, "Wrong age, try again", "Wrong Input",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(patientData.this, "\"the % values must me between 0-100", "Wrong Input",JOptionPane.WARNING_MESSAGE);
+
             }
         }
     }
 
+    public boolean isINRange(int val){
+        if(0<=val && val<=100)
+            return true;
+        else
+            return false;
+    }
     public void correctage(int a)throws Exception{
         if(a<0||a>120)
             throw new Exception("wrong age");
