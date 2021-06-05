@@ -96,13 +96,17 @@ public class Analysis {
                 Summary += " " + sicktemp + "\n"+"Recommend Care: \n";
                 String tempadvice = Adviser(i);
                 data[i][j++] = tempadvice;
-                Summary += " " + tempadvice + "\n"+"====================\n";
+                Summary += " " + tempadvice + "\n"+"================================================================================\n";
                 count++;
             }
         }
         //TODO remove note!!
-        JOptionPane.showMessageDialog(new JFrame(), Summary, ":)", JOptionPane.NO_OPTION);
         saveDataFile();
+        if(Summary.equals(""))
+            JOptionPane.showMessageDialog(new JFrame(), "You are completely healthy", "Summary Analysis", JOptionPane.NO_OPTION);
+        else
+            JOptionPane.showMessageDialog(new JFrame(), Summary, "Summary Analysis", JOptionPane.NO_OPTION);
+
         return data;
     }
 
@@ -193,7 +197,7 @@ public class Analysis {
                 if (arrScale[4]==Scale.HIGH)
                     return sick[19];
                 else if(arrScale[4]==Scale.LOW)
-                    return spaceadder(new String[]{sick[1],sick[3]});
+                    return spaceadder(new String[]{sick[1],"\n",sick[3],"\n"});
                 break;
             case 5:
                 if (arrScale[5]==Scale.HIGH)
@@ -392,7 +396,7 @@ public class Analysis {
             return Scale.LOW;
     }
     //3 RBC
-    public Scale RBCscale3(int rbc){
+    public Scale RBCscale3(double rbc){
         if(4.5<=rbc && rbc<=6){
             return Scale.NORMAL;
         }
@@ -483,7 +487,7 @@ public class Analysis {
         return Scale.HIGH;
     }
     //7 keratin
-    public Scale KeratinScale7(int Keratin)
+    public Scale KeratinScale7(double Keratin)
     {
         int gil=pdResults.getAge();
         if(gil <=2)
@@ -672,6 +676,5 @@ public class Analysis {
             return "NORMAL";
         return "not match";
     }
-
 
 }

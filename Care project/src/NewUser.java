@@ -49,7 +49,7 @@ import java.util.*;
             newUserPanel = new JPanel();
             txuserer = new JTextField(15);
             passer = new JPasswordField(15);
-            IDer = new JPasswordField(15);
+            IDer = new JTextField(15);
 
             setSize(600,300);
             setLocation(500,280);

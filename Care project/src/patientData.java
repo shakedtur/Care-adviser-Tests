@@ -8,9 +8,10 @@ public class patientData extends JFrame {
     private int age;
     private String firstname,lastname,id;
     private final int VALUES=11;
-    private int WBC,Neut,Lymph,RBC,HCT,Urea,HB,Keratin,Iron,HDL,Alkaline;//importent to update the number of VALUEs
+    private int WBC,Neut,Lymph,HCT,Urea,HB,Iron,HDL,Alkaline;//importent to update the number of VALUEs
+    private double RBC,Keratin;
     public String[] paramtername={"WBC","Neut","Lymph","RBC","HCT","Urea","HB","Keratin","Iron","HDL","Alkaline"};
-    public int[] HealthResults={WBC,Neut,Lymph,RBC,HCT,Urea,HB,Keratin,Iron,HDL,Alkaline};
+    public int[] HealthResults={WBC,Neut,Lymph,(int)RBC,HCT,Urea,HB,(int)Keratin,Iron,HDL,Alkaline};
     public YesNo Yesnoanswer;
     public Analysis analysis;
     //panels
@@ -27,7 +28,7 @@ public class patientData extends JFrame {
     private JLabel FirstNameLable,LastNameLable,IDLable;
 
     private JTextField[] Jtextlist;
-    private String[] Jtextstring={"500","33","10","5","14","20","14","3","180","30","61"};
+    private String[] Jtextstring={"5000","33","40","5.3","38","22","14","1","140","30","61"};
     private JTextField textage;
 
     private JTextField FirstNameText,LastNameText,IDText;
@@ -40,11 +41,11 @@ public class patientData extends JFrame {
         HealthResults[0]=WBC;
         HealthResults[1]=Neut;
         HealthResults[2]=Lymph;
-        HealthResults[3]=RBC;
+        HealthResults[3]=(int)RBC;
         HealthResults[4]=HCT;
         HealthResults[5]=Urea;
         HealthResults[6]=HB;
-        HealthResults[7]=Keratin;
+        HealthResults[7]=(int)Keratin;
         HealthResults[8]=Iron;
         HealthResults[9]=HDL;
         HealthResults[10]=Alkaline;
@@ -118,21 +119,21 @@ public class patientData extends JFrame {
                 WBC=(Integer.parseInt(Jtextlist[0].getText()));
                 Neut=Integer.parseInt(Jtextlist[1].getText());
                 Lymph=Integer.parseInt(Jtextlist[2].getText());
-                RBC=Integer.parseInt(Jtextlist[3].getText());
+                RBC=Double.parseDouble(Jtextlist[3].getText());
                 HCT=Integer.parseInt(Jtextlist[4].getText());
                 Urea=Integer.parseInt(Jtextlist[5].getText());
                 HB=Integer.parseInt(Jtextlist[6].getText());
-                Keratin=Integer.parseInt(Jtextlist[7].getText());
+                Keratin=Double.parseDouble(Jtextlist[7].getText());
                 Iron=Integer.parseInt(Jtextlist[8].getText());
                 HDL=Integer.parseInt(Jtextlist[9].getText());
                 Alkaline=Integer.parseInt(Jtextlist[10].getText());
                 SetHealthVal();
                 //TODO remove notes from here!!!
-                JOptionPane.showMessageDialog(patientData.this, "Success", ":)", JOptionPane.NO_OPTION);
 
                 if(!isINRange(Neut)||!isINRange(Lymph)||!isINRange(HCT)){
                     throw new Exception();
                 }
+                JOptionPane.showMessageDialog(patientData.this, "Success", ":)", JOptionPane.NO_OPTION);
                 setVisible(false);
 
             }
@@ -144,6 +145,8 @@ public class patientData extends JFrame {
                 JOptionPane.showMessageDialog(patientData.this, "\"the % values must me between 0-100", "Wrong Input",JOptionPane.WARNING_MESSAGE);
 
             }
+
+
         }
     }
 
@@ -266,7 +269,7 @@ public class patientData extends JFrame {
         Lymph = lymph;
     }
 
-    public int getRBC() {
+    public double getRBC() {
         return RBC;
     }
 
@@ -298,7 +301,7 @@ public class patientData extends JFrame {
         this.HB = HB;
     }
 
-    public int getKeratin() {
+    public double getKeratin() {
         return Keratin;
     }
 

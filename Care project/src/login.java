@@ -92,24 +92,25 @@ public class login extends JFrame {
                     String puname = txuser.getText();
                     String ppaswd = pass.getText();
 
-
+                    boolean flag=false;
                     while (scan.hasNext()) {
                         usertxt = scan.nextLine();
                         passtxt = scan.nextLine();
-
-                    }
-                    if(puname.equals(usertxt) && ppaswd.equals(passtxt)) {
+                        if(puname.equals(usertxt) && ppaswd.equals(passtxt)) {
 //                        MainMenu menu =new MainMenu();
 //                        patientData qframe=new patientData();
-                        setLoginsuccess(true);
-                        JOptionPane.showMessageDialog(null,"Welcom Doctor");
-                        dispose();
-                    }
+                            setLoginsuccess(true);
+                            JOptionPane.showMessageDialog(null,"Welcom Doctor "+usertxt);
+                            dispose();
+                            flag=true;
+                        }
 
-                    else if(puname.equals("") && ppaswd.equals("")){
-                        JOptionPane.showMessageDialog(null,"Please insert Username and Password");
+                        else if(puname.equals("") && ppaswd.equals("")){
+                            JOptionPane.showMessageDialog(null,"Please insert Username and Password");
+                        }
+
                     }
-                    else {
+                    if(flag==false){
 
                         JOptionPane.showMessageDialog(null,"Wrong Username / Password");
                         txuser.setText("");

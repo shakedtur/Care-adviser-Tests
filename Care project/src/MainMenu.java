@@ -106,6 +106,11 @@ public class MainMenu extends JFrame implements ActionListener {
 //                upPanel.setVisible(true);
 //                repaint();
             }
+            for (int i = 0; i < btmNameStrings.length; i++) {
+                if (i != 0) {
+                    btmButtons[i].setVisible(true);
+                }
+            }
             //TODO complete button just than login
         }
         if(e.getSource()==btmButtons[1]){//Patient data
@@ -128,10 +133,13 @@ public class MainMenu extends JFrame implements ActionListener {
                     if(tableshow!=null){
                         remove(tableshow);
                     }
-                    JTable t=new JTable();
+                    //JTable t=new JTable();
 
                     tableshow=firstpatient.getAnalysis().getScrollPane();
-                    add(tableshow);
+                    String formalinfo="Health information about: "+firstpatient.getFirstname()+" \n"+firstpatient.getLastname()+" \n"+firstpatient.getId();
+                    JLabel formalinfolable=new JLabel(formalinfo);
+                    add(formalinfolable,BorderLayout.NORTH);
+                    add(tableshow,BorderLayout.CENTER);
                     repaint();
                     revalidate();
                 }
@@ -170,7 +178,9 @@ public class MainMenu extends JFrame implements ActionListener {
         btmButtons = new JButton[btmNameStrings.length];
         for (int i = 0; i < btmNameStrings.length; i++) {
             btmButtons[i] = new JButton(btmNameStrings[i]);
-            // if (i == 5)
+             if (i != 0){
+                 btmButtons[i].setVisible(false);
+             }
             // btmButtons[i].addMouseListener(new mouseClick());
             // else
             btmButtons[i].setBackground(Color.WHITE);
